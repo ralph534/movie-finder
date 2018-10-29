@@ -19,15 +19,30 @@ const Header = () => {
     maxWidth: 1280,
     minHeight: 120,
     height: 'auto',
-    padding: '20px 0px'
+    padding: '20px 0px',
+    margin: '0px auto',
+    boxSizing: 'border-box',
+    overFlow: 'hidden',
 
+  }
+
+  var logo = {
+     width: 300,
+     marginTop: 20,
+     float:'left',
+  }
+
+  var greenLogo = {
+    width: 150,
+    marginTop: 15,
+    float: 'right',
   }
 
     return(
         <div className="rmdb-header" style={headerBody}>
           <div className="rmdb-header-content" style={bothContent}>
-            <img className="movie-logo" src="./images/reactMovie_logo.png" atl="rmdb-logo" />
-            <img className="tmdb-logo" src="./images/tmdb_logo.png" atl="tmdb-logo" />
+            <a href="https://www.google.com"><img className="movie-logo" src="./images/reactMovie_logo.png" atl="rmdb-logo" style={logo}/></a>
+            <img className="tmdb-logo" src="./images/tmdb_logo.png" atl="tmdb-logo" style={greenLogo}/>
           </div>
         </div>
     )
