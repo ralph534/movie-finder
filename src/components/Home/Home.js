@@ -6,6 +6,8 @@ import FourColGrid from '../elements/FourColGrid/FourColGrid';
 import MovieThumb from '../elements/MovieThumb/MovieThumb';
 import LoadMoreBtn from '../elements/LoadMoreBtn/LoadMoreBtn';
 import Spinner from '../elements/Spinner/Spinner';
+import ToDo from '../elements/ToDo/ToDo';
+import { Timeline } from 'react-twitter-widgets'
 
 
 
@@ -18,7 +20,8 @@ class Home extends Component {
     currentPage: 0,
     totalPages: 0,
     searchTerm: '',
-    counter: 0
+    counter: 0,
+    todos: []
   }
 
 
@@ -27,43 +30,67 @@ class Home extends Component {
       loading: true
     });
     const endpoint = `${API_URL}movie/popular?api_key=${API_KEY}&lanuage-en-US&page=1`;
-    this.fetchitems(endpoint);
+    this.fetchItems(endpoint);
   }
 
-  fetchitems = (endpoint) => {
+  loadMoreItem = () => {
+    let endpoint = '';
+    this.setState({
+      loading: true
+    });
+
+    if(this.state.searchTerm === ''){
+      endpoint = `${API_URL}movie/popular?api_key=${API_KEY}&lanuage-en-US&page=${this.state.currentPage + 1}`;
+    }else{
+      endpoint = `${API_URL}search/popular?api_key=${API_KEY}&lanuage-en-US&query${this.state.searchTerm}&page=${this.state.currentPage + 1}`;
+    }
+    this.fetchItems(endpoint);
+  }
+
+  fetchItems = (endpoint) => {
     fetch(endpoint)
-    .then(result => result.json())
-    .then(result => {
-      this.setState({
-        movies: [...this.state.movies, ...result.results],
-        heroImage: this.state.heroImage || result.results[0],
-        loading: false,
-        currentPage: result.page,
-        totalPages: result.total_pages
-      })
-
-    })
-
+    console.log(endpoint)
   }
+
 
   clickButton = () => {
-
     let copyCounter = this.state.counter
     copyCounter += 1
-    console.log(copyCounter + ' click')
     this.setState({
       counter: copyCounter
     })
   }
 
+searchHistory = (e) => {
+  e.preventDefault();
+  console.log('text')
+
+}
+
+
+
 
 
   render(){
     return(
-      <div>
+      <div className="rmdb-home">
         <HeroImage />
         <SearchBar />
         <FourColGrid />
+        <Timeline
+    dataSource={{
+      sourceType: 'profile',
+      screenName: 'L_diaz146'
+    }}
+    options={{
+      username: 'TwitterDev',
+      height: '400',
+      width: '400'
+    }}
+  />
+        <ToDo
+        search = {this.searchHistory}
+        />
         <Spinner />
         <LoadMoreBtn />
         {this.state.counter} click
