@@ -20,8 +20,7 @@ class Home extends Component {
     currentPage: 0,
     totalPages: 0,
     searchTerm: '',
-    counter: 0,
-    todos: []
+    counter: 1,
   }
 
 
@@ -49,23 +48,31 @@ class Home extends Component {
 
   fetchItems = (endpoint) => {
     fetch(endpoint)
-    console.log(endpoint)
+    .then(result => result.json())
+    .then(result => {
+      this.setState({
+        movies: [...this.state.movies, ...result.results],
+        heroImage: this.state.heroImage || result.results[0],
+        loading: false,
+        currentPage: result.page,
+        totalPages: result.total_pages
+      })
+      console.log(result)
+    })
   }
 
 
   clickButton = () => {
-    let copyCounter = this.state.counter
-    copyCounter += 1
+    console.log(this.state.counter)
+
+    let copyCounter = this.state.counter;
+    copyCounter += 1;
     this.setState({
       counter: copyCounter
     })
   }
 
-searchHistory = (e) => {
-  e.preventDefault();
-  console.log('text')
 
-}
 
 
 
@@ -74,9 +81,14 @@ searchHistory = (e) => {
   render(){
     return(
       <div className="rmdb-home">
-        <HeroImage />
-        <SearchBar />
-        <FourColGrid />
+        {this.state.heroImage ?
+        <div>
+          <HeroImage
+            image = {`${IMAGE_BASE_URL}${BACKDROP_SIZE}${this.state.heroImage.backdrop_path}`}
+            title={this.state.heroImage.original_title}
+            text={this.state.heroImage.overview} />
+          <SearchBar />
+        </div> : null }
         <Timeline
     dataSource={{
       sourceType: 'profile',
@@ -88,11 +100,8 @@ searchHistory = (e) => {
       width: '400'
     }}
   />
-        <ToDo
-        search = {this.searchHistory}
-        />
+
         <Spinner />
-        <LoadMoreBtn />
         {this.state.counter} click
           <button onClick={this.clickButton}>Wow A button</button>
       </div>
