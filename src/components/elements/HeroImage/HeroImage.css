@@ -35,13 +35,13 @@
 
 .rmdb-heroimage-text h1 {
   font-family: 'Abel', sans-serif;
-  font-size:48px;
+  font-size:32px;
   color: #fff;
 }
 
 .rmdb-heroimage-text p {
   font-family: 'Abel', sans-serif;
-  font-size: 22px;
+  font-size: 20px;
   line-height: 26px;
   color: #fff;
 }
@@ -49,5 +49,6 @@
 @media screen and (max-width: 720px) {
   .rmdb-heroimage-text {
     max-width: 100%;
+
   }
 }

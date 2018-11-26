@@ -18,6 +18,7 @@ const HeroImage = (props) => {
         <div className="rmdb-heroimage-text">
           <h1>{props.title}</h1>
           <p>{props.text}</p>
+          <p>{props.rate}</p>
         </div>
       </div>
     </div>

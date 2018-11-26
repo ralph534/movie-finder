@@ -32,6 +32,26 @@ class Home extends Component {
     this.fetchItems(endpoint);
   }
 
+
+
+  searchItem = (searchTerm) => {
+    console.log(searchTerm)
+    let endpoint = ''
+    this.setState({
+      movies: [],
+      loading: true,
+      searchTerm
+    })
+    if(searchTerm == ''){
+      endpoint = `${API_URL}movie/popular?api_key=${API_KEY}&lanuage-en-US&page=1`;
+    }else{
+      endpoint = `${API_URL}search/movie?api_key=${API_KEY}&language-en-US&query=${searchTerm}`;
+    }
+    this.fetchItems(endpoint);
+  }
+
+
+
   loadMoreItem = () => {
     let endpoint = '';    // endpoint is an empty string as of now
     this.setState({
@@ -46,6 +66,8 @@ class Home extends Component {
     this.fetchItems(endpoint);
   }
 
+
+
   fetchItems = (endpoint) => {
     fetch(endpoint)
     .then(result => result.json())
@@ -59,7 +81,10 @@ class Home extends Component {
       })
       console.log(result)
     })
+    .catch(error => console.error('Error:', error))
   }
+
+
 
 
   clickButton = () => {
@@ -86,8 +111,10 @@ class Home extends Component {
           <HeroImage
             image = {`${IMAGE_BASE_URL}${BACKDROP_SIZE}${this.state.heroImage.backdrop_path}`}
             title={this.state.heroImage.original_title}
-            text={this.state.heroImage.overview} />
-          <SearchBar />
+            text={this.state.heroImage.overview}
+            rate={this.state.heroImage.vote_average}/>
+          <SearchBar
+            callback={this.searchItem}/>
         </div> : null }
         <Timeline
     dataSource={{
