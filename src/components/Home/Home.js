@@ -33,14 +33,14 @@ class Home extends Component {
   }
 
   loadMoreItem = () => {
-    let endpoint = '';
+    let endpoint = '';    // endpoint is an empty string as of now
     this.setState({
       loading: true
     });
 
-    if(this.state.searchTerm === ''){
+    if(this.state.searchTerm === ''){  /// if there is no input then load the next page
       endpoint = `${API_URL}movie/popular?api_key=${API_KEY}&lanuage-en-US&page=${this.state.currentPage + 1}`;
-    }else{
+    }else{     /// if there is an input then render inputs page 1
       endpoint = `${API_URL}search/popular?api_key=${API_KEY}&lanuage-en-US&query${this.state.searchTerm}&page=${this.state.currentPage + 1}`;
     }
     this.fetchItems(endpoint);

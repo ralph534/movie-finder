@@ -6,7 +6,7 @@ const API_KEY = '844dba0bfd8f3a4f3799f6130ef9e335';
 
 // Images
 // An image URL looks like this example:
-// http://image.tmdb.org/t/p/w780/bOGkgRGdhrBYJSLpXaxhXVstddV.jpg
+// http://image.tmdb.org/t/p/w780//xgbeBCjmFpRYHDF7tQ7U98EREWp.jpg
 
 const IMAGE_BASE_URL ='http://image.tmdb.org/t/p/';
 

@@ -12,12 +12,12 @@ const HeroImage = (props) => {
       41%,rgba(0,0,0,0.65)
       100%),
        url('${props.image}'), #fff`
-     }}
-     >
+     }}>
+
       <div className="rmdb-heroimage-content">
         <div className="rmdb-heroimage-text">
-          <h1>Welcome</h1>
-          <p>hello</p>
+          <h1>{props.title}</h1>
+          <p>{props.text}</p>
         </div>
       </div>
     </div>
