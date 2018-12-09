@@ -35,19 +35,19 @@ class Home extends Component {
 
 
   searchItem = (searchTerm) => {
-    console.log(searchTerm)
+    // console.log(searchTerm)
     let endpoint = ''
     this.setState({
       movies: [],
       loading: true,
       searchTerm
     })
-    if(searchTerm == ''){
+    if(searchTerm === ''){
       endpoint = `${API_URL}movie/popular?api_key=${API_KEY}&lanuage-en-US&page=1`;
     }else{
       endpoint = `${API_URL}search/movie?api_key=${API_KEY}&language-en-US&query=${searchTerm}`;
     }
-    this.fetchItems(endpoint);
+     this.fetchItems(endpoint);
   }
 
 
@@ -68,20 +68,35 @@ class Home extends Component {
 
 
 
+  // fetchItems = (endpoint) => {
+  //   fetch(endpoint)
+  //   .then(result => result.json())
+  //   .then(result => {
+  //     this.setState({
+  //       movies: [...this.state.movies, ...result.results],
+  //       heroImage: this.state.heroImage || result.results[0],
+  //       loading: false,
+  //       currentPage: result.page,
+  //       totalPages: result.total_pages
+  //     })
+  //     console.log(result)
+  //   })
+  //   .catch(error => console.error('Error:', error))
+  // }
+
   fetchItems = (endpoint) => {
     fetch(endpoint)
     .then(result => result.json())
     .then(result => {
       this.setState({
-        movies: [...this.state.movies, ...result.results],
+        movies: [...this.state.movies, result.results],
         heroImage: this.state.heroImage || result.results[0],
-        loading: false,
         currentPage: result.page,
         totalPages: result.total_pages
       })
       console.log(result)
     })
-    .catch(error => console.error('Error:', error))
+    .catch(error => console.log('Error:', error))
   }
 
 
@@ -112,7 +127,8 @@ class Home extends Component {
             image = {`${IMAGE_BASE_URL}${BACKDROP_SIZE}${this.state.heroImage.backdrop_path}`}
             title={this.state.heroImage.original_title}
             text={this.state.heroImage.overview}
-            rate={this.state.heroImage.vote_average}/>
+            rate={this.state.heroImage.vote_average}
+            pop={this.state.heroImage.popularity}/>
           <SearchBar
             callback={this.searchItem}/>
         </div> : null }
